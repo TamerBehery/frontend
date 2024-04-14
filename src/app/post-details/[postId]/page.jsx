@@ -5,7 +5,7 @@ import postApis from "@/_utils/PostApis";
 import Image from "next/image";
 import SkeletonPostDetails from "@/components/SkeletonPostDetails";
 
-const postDetails = ({ params }) => {
+const PostDetails = ({ params }) => {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const postDetails = ({ params }) => {
   );
 };
 
-export default postDetails;
+export default PostDetails;
