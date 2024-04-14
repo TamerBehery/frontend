@@ -37,6 +37,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
           {slides.map((s) => {
             return (
               <Link
+                key={s?.id}
                 href={`/post-details/${slides[current]?.id}`}
                 className="min-w-[100%] max-w-[100%] min-h-[100%] max-h-[100%] h-[300px]"
               >
