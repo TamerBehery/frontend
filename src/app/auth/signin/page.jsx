@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 
 import Logo from "@/../public/static/android-chrome-192x192.png";
 
-const signin = () => {
+const Signin = () => {
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -137,4 +137,4 @@ const signin = () => {
   );
 };
 
-export default signin;
+export default Signin;

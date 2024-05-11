@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Logo from "@/../public/static/android-chrome-192x192.png";
 import UploadImage from "@/components/UploadImage";
 
-const register = () => {
+const Register = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const [data, setData] = useState({
@@ -155,4 +155,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
