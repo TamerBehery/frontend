@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({Tittle}) => {
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex items-center gap-1 text-sm text-gray-600">
@@ -47,7 +47,7 @@ const Breadcrumb = () => {
             className="block transition hover:text-gray-700"
           >
             {" "}
-            مقال{" "}
+            {Tittle}{" "}
           </Link>
         </li>
 

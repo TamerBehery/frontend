@@ -28,7 +28,10 @@
     ".next/types/**/*.ts",
     "src/_components/Carousel.jsx",
     "src/_components/Navbar.jsx",
-    "src/app/post-details/[postId]/page.jsx"
-, "src/app/page.jsx"  ],
+    "src/app/post-details/[postId]/page.jsx",
+    "src/app/page.jsx",
+    "src/app/api/auth/[...nextauth]/route.js",
+    "src/app/auth/signin/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }

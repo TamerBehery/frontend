@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import Carousel from "@/components/Carousel";
 import PostList from "@/components/PostList";
 import SkeletonCarousel from "@/components/SkeletonCarousel";

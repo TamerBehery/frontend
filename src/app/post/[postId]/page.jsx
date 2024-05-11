@@ -5,7 +5,7 @@ import postApis from "@/_utils/PostApis";
 import Image from "next/image";
 import SkeletonPostDetails from "@/components/SkeletonPostDetails";
 
-const PostDetails = ({ params }) => {
+const Post = ({ params }) => {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const PostDetails = ({ params }) => {
 
   return (
     <div>
-      <Breadcrumb />
+      <Breadcrumb Tittle={"مقال"}/>
 
       {post?.attributes?.Image?.data[0]?.attributes?.url ? (
         <div className="ArticleContainer mx-10 lg:mx-[19%]">
@@ -61,4 +61,4 @@ const PostDetails = ({ params }) => {
   );
 };
 
-export default PostDetails;
+export default Post;

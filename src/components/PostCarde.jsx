@@ -3,7 +3,7 @@ import React from "react";
 
 const PostCarde = ({ post }) => {
   return (
-    <Link href={`/post-details/${post?.id}`}>
+    <Link href={`/post/${post?.id}`}>
       <div className="flex items-center gap-3 bg-slate-100">
         <div className="bg-white p-1 border-gray-300 border-2">
           <img
