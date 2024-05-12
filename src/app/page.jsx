@@ -47,15 +47,32 @@ export default function Home() {
     getPosts();
   }, []);
 
-  const getPosts = () => {
+  const getPosts = async () => {
+    /*
     PostApis.getPosts().then((res) => {
       setPosts(res.data.data);
     });
+    */
+
+    const response = await fetch("/api/post", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response?.json();
+
+    if (data?.data) {
+      setPosts(data?.data);
+    }
   };
+
+  console.log(posts);
 
   return (
     <div className=" ">
-      {posts[0]?.attributes?.Image?.data[0]?.attributes?.url ? (
+      {/*{posts[0]?.attributes?.Image?.data[0]?.attributes?.url ? (  */}
+      {posts[0]?.Image ? (
         <div>
           <Carousel slides={posts} autoSlide={true} />
           <PostList posts={posts} />

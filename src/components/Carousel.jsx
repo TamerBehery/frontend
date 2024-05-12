@@ -35,6 +35,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {slides.map((s) => {
+            console.log(s)
             return (
               <Link
                 key={s?.id}
@@ -43,7 +44,8 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
               >
                 <img
                   key={s?.id}
-                  src={s?.attributes?.Image?.data[0]?.attributes?.url}
+                  //src={s?.attributes?.Image?.data[0]?.attributes?.url}
+                  src={s?.Image}
                   className="min-w-[100%] max-w-[100%] min-h-[100%] max-h-[100%] h-[300px]"
                 ></img>
               </Link>
@@ -83,7 +85,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
       </div>
 
       <div className="mt-2 text-center font-sans font-semibold line-clamp-1">
-        {slides[current]?.attributes?.Tittle}
+        {slides[current]?.Tittle}
       </div>
     </div>
   );
