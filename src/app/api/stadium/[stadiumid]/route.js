@@ -8,7 +8,7 @@ export async function GET(request, context) {
 
   const Requests = await prisma.cLB_Stadium.findMany({
     where: {
-      Stadium_ID: parseInt(params.stadiumID),
+      Stadium_ID: parseInt(params.stadiumid),
     },
   });
 

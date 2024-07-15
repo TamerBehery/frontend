@@ -25,7 +25,7 @@ const CreateClosetRentRequest = () => {
     Request_ID: 0,
     Membership_ID: 0,
     //Membership_No: "",
-    Year: (new Date().getFullYear()).toString(),
+    Year: new Date().getFullYear().toString(),
     Closet_ID: 0,
     Rent_Value: 0,
     Remarks: "",
@@ -33,13 +33,11 @@ const CreateClosetRentRequest = () => {
 
   const [data, setData] = useState(emptyData);
 
-
-
- useEffect(() => {
-   setEnabled(false);
-   getRentValue();
-   setEnabled(true);
- }, [closetID]);
+  useEffect(() => {
+    setEnabled(false);
+    getRentValue();
+    setEnabled(true);
+  }, [closetID]);
 
   useEffect(() => {
     getClosets();
@@ -55,7 +53,7 @@ const CreateClosetRentRequest = () => {
     const resData = await response?.json();
 
     setClosetList(resData?.data);
-};
+  };
 
   const getRentValue = async () => {
     if (closetID !== 0) {
@@ -141,9 +139,13 @@ const CreateClosetRentRequest = () => {
                 className="w-36 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               >
                 <option value="0">اختيار الدولاب</option>
-                {closetList?.map((c)=>{return(
-                <option key={c.Closet_ID} value={c.Closet_ID}>{c.Closet_Name}</option>
-            )})}
+                {closetList?.map((c) => {
+                  return (
+                    <option key={c.Closet_ID} value={c.Closet_ID}>
+                      {c.Closet_Name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

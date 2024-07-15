@@ -25,8 +25,8 @@ const CreateStadiumRentRequest = () => {
     Request_ID: 0,
     Membership_ID: 0,
     //Membership_No: "",
-    Start_Date:"",
-    End_Date:"",
+    Start_Date: "",
+    End_Date: "",
     Stadium_ID: 0,
     Rent_Value: 0,
     Remarks: "",
@@ -34,20 +34,18 @@ const CreateStadiumRentRequest = () => {
 
   const [data, setData] = useState(emptyData);
 
-
-
- useEffect(() => {
-   setEnabled(false);
-   getRentValue();
-   setEnabled(true);
- }, [stadiumID]);
+  useEffect(() => {
+    setEnabled(false);
+    getRentValue();
+    setEnabled(true);
+  }, [stadiumID]);
 
   useEffect(() => {
     getStadiums();
   }, []);
 
   const getStadiums = async () => {
-    const response = await fetch(`/api/CLB_Stadium`, {
+    const response = await fetch(`/api/stadium`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -56,11 +54,11 @@ const CreateStadiumRentRequest = () => {
     const resData = await response?.json();
 
     setStadiumList(resData?.data);
-};
+  };
 
   const getRentValue = async () => {
     if (stadiumID !== 0) {
-      const response = await fetch(`/api/CLB_Stadium/${stadiumID}`, {
+      const response = await fetch(`/api/stadium/${stadiumID}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -142,9 +140,13 @@ const CreateStadiumRentRequest = () => {
                 className="w-36 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               >
                 <option value={0}>اختيار الملعب</option>
-                {stadiumList?.map((c)=>{return(
-                <option key={c.Stadium_ID} value={c.Stadium_ID}>{c.Stadium_Name}</option>
-            )})}
+                {stadiumList?.map((c) => {
+                  return (
+                    <option key={c.Stadium_ID} value={c.Stadium_ID}>
+                      {c.Stadium_Name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -165,7 +167,9 @@ const CreateStadiumRentRequest = () => {
                 type="datetime-local"
                 //required
                 value={data.Start_Date}
-                onChange={(e) => setData({ ...data, Start_Date: e.target.value })}
+                onChange={(e) =>
+                  setData({ ...data, Start_Date: e.target.value })
+                }
                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               />
             </div>
