@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
@@ -57,8 +59,8 @@ export async function POST(request) {
   const user = await prisma.cLB_Stadium_Rent_Request.create({
     data: {
       Stadium_ID,
-      Is_Member:true,
-      Is_Not_Member:false,
+      Is_Member: true,
+      Is_Not_Member: false,
       Membership_ID: parseInt(session?.user?.Membership_ID),
       Start_Date: new Date(Start_Date),
       End_Date: new Date(End_Date),
