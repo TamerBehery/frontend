@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 export async function GET(request, context) {
   const { params } = context;
 
-  const Requests = await prisma.cLB_Closet.findMany({
+  const Requests = await prisma.closet.findMany({
     where: {
-      Closet_ID: parseInt(params.closetID),
+      Closet_ID: parseInt(params.closetid),
       Year: params.year,
     },
   });

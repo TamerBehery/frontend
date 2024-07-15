@@ -46,7 +46,7 @@ const CreateClosetRentRequest = () => {
   }, []);
 
   const getClosets = async () => {
-    const response = await fetch(`/api/CLB_Closet`, {
+    const response = await fetch(`/api/closet`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const CreateClosetRentRequest = () => {
 
   const getRentValue = async () => {
     if (closetID !== 0) {
-      const response = await fetch(`/api/CLB_Closet/${closetID}`, {
+      const response = await fetch(`/api/closet/${closetID}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
