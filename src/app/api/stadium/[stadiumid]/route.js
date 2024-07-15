@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 export async function GET(request, context) {
   const { params } = context;
 
-  const Requests = await prisma.cLB_Stadium.findMany({
+  const Requests = await prisma.CLB_Stadium.findMany({
     where: {
       Stadium_ID: parseInt(params.stadiumid),
     },
