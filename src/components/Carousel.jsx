@@ -35,7 +35,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
           style={{ transform: `translateX(-${current * 100}%)` }}
         >
           {slides.map((s) => {
-            console.log(s)
+            //console.log(s)
             return (
               <Link
                 key={s?.id}

@@ -17,7 +17,7 @@ model User  {
   id            String          @id @default(cuid())
   name          String?
   username      String?         //@unique
-  email         String?         @unique
+  email         String?         //@unique
   emailVerified DateTime?
   hashedPassword String?
   image         String?
@@ -26,8 +26,12 @@ model User  {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  Membership_ID Int?
+  Membership_No String?   @unique
+  National_ID   String?
 
   //@@map("Login_Users")
 } 
@@ -101,3 +105,116 @@ model Post  {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 } 
+
+model CLB_Membership  {
+  Membership_ID            Int   @id
+  Membership_Type_ID       Int
+  Membership_Type_Name     String         //@db.nvarchar(max)
+  Membership_Serial_No     Int 
+  Membership_No            String  @unique
+  Membership_Date          DateTime
+  Renew_Date               DateTime?
+  Currency_ID              Int
+  Currency_Name            String
+  Trader_ID                String
+  Trader_Code              String
+  Trader_Name              String
+  Tel1                     String?
+  Tel2                     String?
+  Tel3                     String?
+  email                    String?
+  National_ID              String?
+  Membership_Status        String?
+} 
+
+model CLB_Membership_Renew_Value  {
+  ID                       Int   @id
+  Membership_ID            Int 
+  Membership_No            String         //@db.nvarchar(max)
+  Year                     String
+  Currency_ID              Int
+  Members_Renew            Float?
+  Renew_DelayPenalty       Float?
+  CardPrint_Value          Float?
+  Fund_Value               Float?
+  Renew_Value              Float?
+} 
+
+model CLB_Membership_Request  {
+  Request_ID               String          @id @default(cuid())
+  Membership_Name          String         //@db.nvarchar(max)
+  Birth_Date               DateTime?       
+  Qualification            String?
+  Job                      String?
+  Home_Adress              String?
+  Home_Tel                 String?
+  Work_Adress              String?
+  Work_Tel                 String?
+  Marital_Status           String?
+  Wife_Name                String?
+  Wife_Birth_Date          DateTime?
+  Wife_Job                 String?
+  Other_Membership         String?
+} 
+
+model CLB_Renew_Membership_Request  {
+  Request_ID               String          @id @default(cuid())
+  Membership_ID            Int
+  Membership_No            String         //@db.nvarchar(max)
+  Request_Date             DateTime       @default(now())
+  Year                     String
+  Request_State            Int
+  Currency_ID              Int
+  Members_Renew            Float?
+  Renew_DelayPenalty       Float?
+  CardPrint_Value          Float?
+  Fund_Value               Float?
+  Renew_Value              Float?
+  Remarks                  String?
+} 
+
+model CLB_Closet  {
+  Closet_ID              Int   @id
+  Closet_Name            String         //@db.nvarchar(max)
+  Closet_Place           String
+  Rent_Value             Float?
+  Remarks                String?
+} 
+
+model CLB_Stadium  {
+  Stadium_ID             Int   @id
+  Stadium_Name           String         //@db.nvarchar(max)
+  Stadium_Place          String
+  Stadium_Description    String
+  Rent_Value             Float?
+  Remarks                String?
+} 
+
+model CLB_Closet_Rent_Request  {
+  Request_ID               String          @id @default(cuid())
+  Request_Date             DateTime       @default(now())
+  Closet_ID                Int
+  Membership_ID            Int
+  //Membership_No            String         //@db.nvarchar(max)
+  Year                     String       
+  Request_State            Int
+  Currency_ID              Int
+  Rent_Value               Float?
+  Remarks                  String?
+} 
+
+model CLB_Stadium_Rent_Request  {
+  Request_ID               String          @id @default(cuid())
+  Request_Date             DateTime       @default(now())
+  Stadium_ID               Int
+  Is_Member                Boolean
+  Is_Not_Member            Boolean
+  Membership_ID            Int
+  Start_Date               DateTime       
+  End_Date                 DateTime       
+  Request_State            Int
+  Currency_ID              Int
+  Rent_Value               Float?
+  Remarks                  String?
+} 
+

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -13,25 +14,42 @@ const Signin = () => {
   const router = useRouter();
 
   const [data, setData] = useState({
-    email: "",
+    Membership_No: "",
+    //National_ID: "",
+    //email: "",
     password: "",
   });
 
-  const loginUser = (e) => {
+  const loginUser = async (e) => {
     e.preventDefault();
-
+    /*
     if (data.email === "" || data.password === "") {
       setError("يجب ادخال البريد الالكترونى و كلمة المرور أولاً .");
       return;
     }
+    */
+
+    if (data.Membership_No === "" || data.password === "") {
+      setError("يجب ادخال رقم العضوية و كلمة المرور أولاً .");
+      return;
+    }
 
     //console.log(data);
-    signIn("credentials", {
-      ...data,
-      redirect: false,
-    });
+    const isLoggedin = await signIn(
+      "credentials",
+      {
+        ...data,
+        redirect: false,
+      },
+      { callbackUrl: "/" }
+    );
 
-    router.push("/");
+    if (isLoggedin.error !== null) {
+      setError("يجب ادخال رقم العضوية و كلمة المرور بشكل صحيح ");
+    } else {
+      //setError("Login Successful!!");
+      router.replace("/");
+    }
   };
 
   return (
@@ -50,7 +68,7 @@ const Signin = () => {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {/* <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={loginUser}>
           <div>
             <label
@@ -68,6 +86,31 @@ const Signin = () => {
                 //required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
+                className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div> */}
+
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-6" onSubmit={loginUser}>
+          <div>
+            <label
+              htmlFor="Membership_No"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              رقم العضوية
+            </label>
+            <div className="mt-2">
+              <input
+                id="Membership_No"
+                name="Membership_No"
+                type="text"
+                autoComplete="Membership_No"
+                //required
+                value={data.Membership_No}
+                onChange={(e) =>
+                  setData({ ...data, Membership_No: e.target.value })
+                }
                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               />
             </div>
@@ -122,16 +165,16 @@ const Signin = () => {
             </button>
           </div>
         </form>
-        {/*         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
-          <a
-            href="#"
-            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
-            Start a 14 day free trial
-          </a>
-        </p>
- */}{" "}
+        {
+          <p className="mt-4 mr-4 text-right text-sm text-gray-500">
+            <Link
+              href="/auth/register"
+              className="font-semibold rtl:font-normal leading-6 text-lg text-indigo-600 hover:text-indigo-500"
+            >
+              انشاء حساب جديد
+            </Link>
+          </p>
+        }
       </div>
     </div>
   );

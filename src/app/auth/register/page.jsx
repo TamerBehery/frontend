@@ -13,13 +13,15 @@ const Register = () => {
   const [data, setData] = useState({
     name: "",
     email: "",
+    Membership_No: "",
+    National_ID: "",
     password: "",
   });
 
   const registerUser = async (e) => {
     e.preventDefault();
 
-    if (data.name === "" || data.email === "" || data.password === "") {
+    if (data.name === "" /*|| data.email === ""*/ || data.password === "" || data.Membership_No === "" || data.National_ID === "") {
       setError("يجب ادخال جميع البيانات اولا");
       return;
     }
@@ -45,7 +47,7 @@ const Register = () => {
     }
   };
 
-  console.log(error);
+  //console.log(error);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -87,7 +89,7 @@ const Register = () => {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <label
               htmlFor="email"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -103,6 +105,52 @@ const Register = () => {
                 //required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
+                className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div> */}
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              رقم العضوية
+            </label>
+            <div className="mt-1">
+              <input
+                id="Membership_No"
+                name="Membership_No"
+                type="number"
+                autoComplete="cc-number"
+                //required
+                value={data.Membership_No}
+                onChange={(e) =>
+                  setData({ ...data, Membership_No: e.target.value })
+                }
+                className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
+              الرقم القومي
+            </label>
+            <div className="mt-1">
+              <input
+                id="National_ID"
+                name="National_ID"
+                type="number"
+                autoComplete="cc-number"
+                //required
+                value={data.National_ID}
+                onChange={(e) =>
+                  setData({ ...data, National_ID: e.target.value })
+                }
                 className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               />
             </div>
@@ -149,7 +197,6 @@ const Register = () => {
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );

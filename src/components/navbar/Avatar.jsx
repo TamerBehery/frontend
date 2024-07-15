@@ -1,7 +1,7 @@
 
 import React from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/lib/nextAuth";
+//import { getServerSession } from "next-auth";
+//import { authOptions } from "@/app/lib/nextAuth";
 import DropdownAvatar from "../DropdownAvatarServerSide";
 
 const Avatar = async () => {

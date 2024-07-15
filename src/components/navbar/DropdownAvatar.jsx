@@ -21,16 +21,22 @@ const DropdownAvatar = () => {
       {/* {status === "loading" && <p>loading</p>} */}
 
       {status === "unauthenticated" && (
-        <button
+        // <button
+        //   type="button"
+        //   className="px-3 py-2 text-xs text-green-800 font-semibold border-2 border-green-800 hover:text-white hover:bg-green-800 focus:outline-none rounded-full items-center "
+        //   onClick={() => {
+        //     signIn();
+        //   }}
+        // >
+        //   تسجيل الدخول
+        // </button>
+        <Link
           type="button"
-          //className="px-4 py-2 text-white bg-green-800 hover:bg-green-900  focus:outline-none font-medium rounded-lg text-sm  items-center"
           className="px-3 py-2 text-xs text-green-800 font-semibold border-2 border-green-800 hover:text-white hover:bg-green-800 focus:outline-none rounded-full items-center "
-          onClick={() => {
-            signIn();
-          }}
+          href="/auth/signin"
         >
           تسجيل الدخول
-        </button>
+        </Link>
       )}
 
       {status === "authenticated" && (

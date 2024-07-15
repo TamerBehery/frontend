@@ -13,6 +13,7 @@ import {
   AiFillTwitterSquare,
   AiFillYoutube,
   AiOutlineWhatsApp,
+  AiOutlineHome,
 } from "react-icons/ai";
 import {
   FaWhatsappSquare,
@@ -109,15 +110,52 @@ const Navbar = () => {
               </li>
             </Link>
 
+            <Link href="/newMempership">
+              <li
+                onClick={() => {
+                  setMenuOpen(false);
+                }}
+                className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
+              >
+                طلب عضوية جديدة
+              </li>
+            </Link>
+
             {status === "authenticated" && (
-              <Link href="/">
+              <Link href="/mempershipRenew">
                 <li
                   onClick={() => {
                     setMenuOpen(false);
                   }}
                   className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
                 >
-                  خدمات الاعضاء
+                  طلب تجديد عضوية
+                </li>
+              </Link>
+            )}
+
+            {status === "authenticated" && (
+              <Link href="/closetRentRequest">
+                <li
+                  onClick={() => {
+                    setMenuOpen(false);
+                  }}
+                  className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
+                >
+                  طلب ايجار دولاب
+                </li>
+              </Link>
+            )}
+
+            {status === "authenticated" && (
+              <Link href="/stadiumRentRequest">
+                <li
+                  onClick={() => {
+                    setMenuOpen(false);
+                  }}
+                  className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
+                >
+                  طلب ايجار ملعب
                 </li>
               </Link>
             )}

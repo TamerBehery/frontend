@@ -25,14 +25,17 @@ export const authOptions = {
       type: "credentials",
       async authorize(credentials) {
         // check to see if email and password is valid
-        if (!credentials.email || !credentials.password) {
+        // if (!credentials.email || !credentials.password) {
+        //   return null;
+        // }
+        if (!credentials.Membership_No || !credentials.password) {
           return null;
         }
 
         // check if user exists
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials.email,
+            Membership_No: credentials.Membership_No,
           },
         });
 
@@ -79,6 +82,8 @@ export const authOptions = {
       if (user) {
         token.name = user.name;
         token.email = user.email;
+        token.Membership_ID = user.Membership_ID;
+        token.Membership_No = user.Membership_No;
         token.id = user.id;
       }
       return token;
@@ -87,8 +92,10 @@ export const authOptions = {
       if (token) {
         session.user.name = token.name;
         session.user.email = token.email;
+        session.user.Membership_ID = token.Membership_ID;
+        session.user.Membership_No = token.Membership_No;
         session.user.id = token.id;
-        session.user.role = 'admin';
+        session.user.role = "admin";
       }
       //console.log(token);
       //console.log("session");
@@ -127,6 +134,6 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   //debug: process.env.NODE_ENV === "development",
   pages: {
-    signIn:'/auth/signin'
+    signIn: "/auth/signin",
   },
 };

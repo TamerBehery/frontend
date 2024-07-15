@@ -67,7 +67,7 @@ export default function Home() {
     }
   };
 
-  console.log(posts);
+  //console.log(posts);
 
   return (
     <div className=" ">
