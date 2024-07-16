@@ -192,7 +192,7 @@ const CreateStadiumRentRequest = () => {
                 htmlFor="Rent_Value"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                قيمة التجديد
+                قيمة الحجز
               </label>
             </div>
             <div className="mt-1">
