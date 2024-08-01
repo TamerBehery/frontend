@@ -41,7 +41,7 @@ const Post = ({ params }) => {
             <h1 className="text-[13px] font-medium font-sans ">
               {post?.PostDate}
             </h1>
-            <h2 className="mt-4 text-2xl font-sans font-bold">
+            <h2 className="mt-4 text-2xl font-bold font-sans text-justify">
               {post?.Tittle}
             </h2>
           </div>
@@ -57,16 +57,10 @@ const Post = ({ params }) => {
           </div>
 
           <div className="my-5">
-            <p>{post?.Article}</p>
+            <p className="text-justify text-lg">
+              {post?.Article}
+            </p>
 
-            {post?.attributes?.Article.map((text, i) => {
-              return (
-                <p key={i}>
-                  {text?.children[0].text}
-                  <br />
-                </p>
-              );
-            })}
           </div>
         </div>
       ) : (
