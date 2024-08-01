@@ -12,30 +12,43 @@ const Post = ({ params }) => {
     getPost();
   }, [params?.postId]);
 
-  const getPost = () => {
-    postApis.getPostById(params?.postId).then((res) => {
-      setPost(res?.data.data);
+  const getPost = async () => {
+    //postApis.getPostById(params?.postId).then((res) => {
+    //  setPost(res?.data.data);
+    //});
+
+    const response = await fetch(`/api/post/${params?.postId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+    const data = await response?.json();
+
+    if (data?.data) {
+      setPost(data?.data[0]);
+    }
+    console.log(data?.data[0]);
   };
 
   return (
     <div>
-      <Breadcrumb Tittle={"مقال"}/>
+      <Breadcrumb Tittle={"مقال"} />
 
-      {post?.attributes?.Image?.data[0]?.attributes?.url ? (
+      {post?.Image ? (
         <div className="ArticleContainer mx-10 lg:mx-[19%]">
           <div className="my-5">
             <h1 className="text-[13px] font-medium font-sans ">
-              {post?.attributes?.PostDate}
+              {post?.PostDate}
             </h1>
             <h2 className="mt-4 text-2xl font-sans font-bold">
-              {post?.attributes?.Tittle}
+              {post?.Tittle}
             </h2>
           </div>
 
           <div>
             <Image
-              src={post?.attributes?.Image?.data[0]?.attributes?.url}
+              src={post?.Image}
               alt="Image"
               width={400}
               height={400}
@@ -44,6 +57,8 @@ const Post = ({ params }) => {
           </div>
 
           <div className="my-5">
+            <p>{post?.Article}</p>
+
             {post?.attributes?.Article.map((text, i) => {
               return (
                 <p key={i}>
