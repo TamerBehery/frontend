@@ -23,18 +23,30 @@ const UploadImage = () => {
       return;
     }
 
+    ////Upload Image
+    //Upload Image To Cloudinary //cloudname: drp7utbgz - upload_preset:microsolution
+    //const formData = new FormData();
+    //formData.append("image", selectedFile);
+    //const response = await axios.post("/api/upload", formData);
+    //const data = await response?.data;
+    //session.data.user.image = data?.image;
+
+    //Upload Image To Cloudinary //cloudname: drp7utbgz - upload_preset:microsolution
     const formData = new FormData();
-
-    formData.append("image", selectedFile);
-
-    const response = await axios.post("/api/upload", formData);
-    const data = await response?.data;
-    session.data.user.image = data?.image;
-
+    formData.append("file", selectedFile);
+    formData.append("upload_preset", "microsolution");
+    let image_Public_ID="";
+    await axios
+      .post("https://api.cloudinary.com/v1_1/drp7utbgz/upload", formData)
+      .then((result)=>{
+        session.data.user.image = result.data.secure_url;
+        image_Public_ID = result.data.public_id;
+      })
+  
     //console.log(data?.image)
     //console.log(user)
 
-    const response1 = await axios.put("/api/users", user);
+    const response1 = await axios.put("/api/users", {user, image_Public_ID});
     //} catch (error) {
     //  console.log(error.response?.data);
     //}
@@ -53,10 +65,9 @@ const UploadImage = () => {
               setSelectedImage(URL.createObjectURL(file));
               setSelectedFile(file);
               setUploading(false);
-            }else {
+            } else {
               setUploading(true);
             }
-
           }}
         ></input>
         <div className="w-40 h-28 aspect-video rounded flex items-center justify-center border-2 border-dashed border-gray-400 cursor-pointer overflow-hidden">

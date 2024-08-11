@@ -22,7 +22,7 @@ export async function GET(request) {
 export async function POST(request) {
 
   const body = await request.json();
-  const { Tittle, PostDate, Article, Image } = body.post;
+  const { Tittle, PostDate, Article, Image, image_Public_ID } = body.post;
 
   //console.log(body);
 
@@ -55,6 +55,7 @@ export async function POST(request) {
       PostDate: new Date(PostDate),
       Article,
       Image,
+      image_Public_ID,
     },
   });
   

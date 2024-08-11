@@ -21,6 +21,7 @@ model User  {
   emailVerified DateTime?
   hashedPassword String?
   image         String?
+  image_Public_ID         String?
   Session       Session[]
   Account       Account?
   // Optional for WebAuthn support
@@ -101,7 +102,8 @@ model Post  {
   PostDate      DateTime?       @db.Date
   Article       String?         //@db.nvarchar(max)
   Image         String?
- 
+  image_Public_ID         String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 } 

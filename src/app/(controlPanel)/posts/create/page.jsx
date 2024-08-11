@@ -26,6 +26,7 @@ const CreatePost = () => {
     PostDate: "",
     Article: "",
     Image: "",
+    image_Public_ID: "",
   });
 
   const [uploading, setUploading] = useState(true);
@@ -45,13 +46,25 @@ const CreatePost = () => {
       return;
     }
 
+    //microsolution
+
     //Upload Image
+    //const formData = new FormData();
+    //formData.append("image", selectedFile);
+    //const response1 = await axios.post("/api/upload", formData);
+    //const imageData = await response1?.data;
+    ////setPost({ ...data, Image: imageData?.image })
+    //post.Image = imageData?.image;
+
+    //Upload Image To Cloudinary //cloudname: drp7utbgz - upload_preset:microsolution
     const formData = new FormData();
-    formData.append("image", selectedFile);
-    const response1 = await axios.post("/api/upload", formData);
-    const imageData = await response1?.data;
-    //setPost({ ...data, Image: imageData?.image })
-    post.Image = imageData?.image;
+    formData.append("file", selectedFile);
+    formData.append("upload_preset", "microsolution");
+    await axios.post("https://api.cloudinary.com/v1_1/drp7utbgz/upload", formData)
+    .then((result)=>{
+      post.Image = result.data.secure_url;
+      post.image_Public_ID = result.data.public_id;
+    })
 
     try {
       const response = await fetch("/api/post", {

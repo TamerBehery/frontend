@@ -4,8 +4,15 @@ import { NextResponse } from "next/server";
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/nextAuth";
+import cloudinary from "cloudinary";
 
 const prisma = new PrismaClient();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_KEY_SECRET,
+});
 
 export async function POST(request) {
   const body = await request.json();
@@ -93,14 +100,31 @@ export async function POST(request) {
 export async function PUT(request) {
   const body = await request.json();
 
-  const { name, email, Membership_No, password, image } = body;
+  const { user, image_Public_ID } = body;
+
+  const Deleted = await prisma.user.findMany({
+    where: {
+      Membership_No: user.Membership_No,
+    },
+  });
+  try {
+    const result = await cloudinary.v2.uploader.destroy(
+      Deleted[0].image_Public_ID,
+      {
+        invalidate: true,
+        resource_type: "image",
+      }
+    );
+  } catch {}
+
 
   const updateUser = await prisma.user.update({
     where: {
-      Membership_No: Membership_No,
+      Membership_No: user.Membership_No,
     },
     data: {
-      image: image,
+      image: user.image,
+      image_Public_ID: image_Public_ID,
     },
   });
 
