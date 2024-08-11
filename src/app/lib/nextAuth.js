@@ -85,6 +85,7 @@ export const authOptions = {
         token.Membership_ID = user.Membership_ID;
         token.Membership_No = user.Membership_No;
         token.id = user.id;
+        token.Role = user.Role;
       }
       return token;
     },
@@ -95,7 +96,7 @@ export const authOptions = {
         session.user.Membership_ID = token.Membership_ID;
         session.user.Membership_No = token.Membership_No;
         session.user.id = token.id;
-        session.user.role = "admin";
+        session.user.Role = token.Role;
       }
       //console.log(token);
       //console.log("session");

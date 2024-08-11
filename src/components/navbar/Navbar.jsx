@@ -170,6 +170,20 @@ const Navbar = () => {
                 تواصل معنا
               </li>
             </Link>
+
+            {status === "authenticated" && data?.user?.Role ==="Admin" && (
+              <Link href="/posts">
+                <li
+                  onClick={() => {
+                    setMenuOpen(false);
+                  }}
+                  className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
+                >
+                  إدارة التقارير الإخبارية
+                </li>
+              </Link>
+            )}
+
           </ul>
 
           <div

@@ -74,7 +74,7 @@ export default function Home() {
       {/*{posts[0]?.attributes?.Image?.data[0]?.attributes?.url ? (  */}
       {posts[0]?.Image ? (
         <div>
-          <Carousel slides={posts} autoSlide={true} />
+          <Carousel slides={posts.slice(0, 10)} autoSlide={true} />
           <PostList posts={posts} />
         </div>
       ) : (

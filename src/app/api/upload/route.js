@@ -10,8 +10,8 @@ export const POST = async (request) => {
   const pathOfImage = `./public/images/${new Date().getTime()}${path.extname(
     image.name
   )}`;
-  
-  writeFile(pathOfImage, bufferData);
 
-  return NextResponse.json({image: pathOfImage.replace("./public", "")});
+  writeFile(pathOfImage, bufferData);
+  
+  return NextResponse.json({ image: pathOfImage.replace("./public", "") });
 };

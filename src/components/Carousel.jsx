@@ -36,6 +36,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
         >
           {slides.map((s) => {
             //console.log(s)
+            
             return (
               <Link
                 key={s?.id}

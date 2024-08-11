@@ -2,6 +2,9 @@ import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/nextAuth";
+
 const prisma = new PrismaClient();
 
 export async function POST(request) {
@@ -98,6 +101,52 @@ export async function PUT(request) {
     },
     data: {
       image: image,
+    },
+  });
+
+  return NextResponse.json(updateUser);
+}
+
+export async function PATCH(request) {
+  const session = await getServerSession(authOptions);
+
+  const body = await request.json();
+
+  const { oldPassword, password } = body.data;
+
+
+  if (!oldPassword || !password) {
+    return NextResponse.json(
+      {
+        message: "Missing oldPassword or password ",
+      },
+      { status: 400 }
+    );
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+  });
+
+  const passwordMath = await bcrypt.compare(oldPassword, user.hashedPassword);
+
+  if (!passwordMath) {
+    return NextResponse.json(
+      { message: "كلمة المرور القديمة غير صحيحة." },
+      { status: 400 }
+    );
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const updateUser = await prisma.user.update({
+    where: {
+      id: session?.user?.id,
+    },
+    data: {
+      hashedPassword,
     },
   });
 

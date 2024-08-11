@@ -7,7 +7,7 @@ export default withAuth(
   async function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const isAuth = await getToken({ req: request });
-    const protectedRoutes = ["/mempershipRenew", "/mempershipRenew/:path*"];
+    const protectedRoutes = ["/posts", "/posts/:path*", "/mempershipRenew", "/mempershipRenew/:path*"];
     const isAuthRoute = pathname.startsWith("/auth/signin");
     const isProtectedRoute = protectedRoutes.some((route) =>
       pathname.startsWith(route)
@@ -32,5 +32,5 @@ export default withAuth(
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/contactUs", "/auth/:path*", "/", "/mempershipRenew", "/mempershipRenew/:path*"],
+  matcher: ["/posts", "/posts/:path*", "/auth/:path*", "/", "/mempershipRenew", "/mempershipRenew/:path*"],
 };

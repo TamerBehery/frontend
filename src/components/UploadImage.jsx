@@ -16,7 +16,7 @@ const UploadImage = () => {
     setUploading(true);
     //try {
     if (!selectedFile) {
-      console.log()
+      //console.log()
       alert("يجب اختيار الصورة اولا");
 
       //setUploading(false);

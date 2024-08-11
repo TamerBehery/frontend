@@ -32,7 +32,7 @@ const DropdownAvatar = () => {
         // </button>
         <Link
           type="button"
-          className="px-3 py-2 text-xs text-green-800 font-semibold border-2 border-green-800 hover:text-white hover:bg-green-800 focus:outline-none rounded-full items-center "
+          className=" px-3 py-2 text-xs text-green-800 font-semibold border-2 border-green-800 hover:text-white hover:bg-green-800 focus:outline-none rounded-full items-center "
           href="/auth/signin"
         >
           تسجيل الدخول
@@ -69,6 +69,19 @@ const DropdownAvatar = () => {
                     }}
                   >
                     الصفحة الشخصية
+                  </li>
+                </Link>
+
+                <hr />
+                <Link href={"/auth/resetPwd"}>
+                  <li
+                    className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => {
+                      closeDropdown();
+                      //signOut();
+                    }}
+                  >
+                    تغيير كلمة المرور
                   </li>
                 </Link>
 

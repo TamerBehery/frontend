@@ -32,7 +32,7 @@ model User  {
   Membership_ID Int?
   Membership_No String?   @unique
   National_ID   String?
-
+  Role          String    @default("User")
   //@@map("Login_Users")
 } 
  
