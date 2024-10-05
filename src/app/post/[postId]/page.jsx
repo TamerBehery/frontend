@@ -28,7 +28,7 @@ const Post = ({ params }) => {
     if (data?.data) {
       setPost(data?.data[0]);
     }
-    console.log(data?.data[0]);
+    //console.log(data?.data[0]);
   };
 
   return (
@@ -57,11 +57,22 @@ const Post = ({ params }) => {
           </div>
 
           <div className="my-5">
-            <p className="text-justify text-lg">
-              {post?.Article}
-            </p>
-
+            <p className="text-justify text-lg">{post?.Article}</p>
           </div>
+
+          {post?.Post_Media.map((i) => {
+            return (
+              <div className="mb-2">
+                <Image
+                  src={i?.Image}
+                  alt="Image"
+                  width={400}
+                  height={400}
+                  className="w-[100%] object-fill"
+                />
+              </div>
+            );
+          })}
         </div>
       ) : (
         <SkeletonPostDetails />

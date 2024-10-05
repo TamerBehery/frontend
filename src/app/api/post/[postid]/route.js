@@ -8,7 +8,7 @@ import path from "path";
 const prisma = new PrismaClient();
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
+  cloud_name: process.env.NEXT_PUBLIC_CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
   api_secret: process.env.CLOUD_KEY_SECRET,
 });
@@ -19,6 +19,9 @@ export async function GET(request, context) {
   const Requests = await prisma.Post.findMany({
     where: {
       id: params.postid,
+    },
+    include: {
+      Post_Media: true, // All images where postId == 20
     },
   });
 
@@ -33,6 +36,9 @@ export async function DELETE(request, context) {
   const Deleted = await prisma.Post.findMany({
     where: {
       id: params.postid,
+    },
+    include: {
+      Post_Media: true, // All images where postId == 20
     },
   });
 
@@ -55,7 +61,23 @@ export async function DELETE(request, context) {
         resource_type: "image",
       }
     );
+
+    Deleted[0].Post_Media.map(async (i) => {
+      const result = await cloudinary.v2.uploader.destroy(
+        i.image_Public_ID,
+        {
+          invalidate: true,
+          resource_type: "image",
+        }
+      );
+    });
   } catch {}
+
+  await prisma.Post_Media.deleteMany({
+    where: {
+      Postid: params.postid,
+    },
+  });
 
   const Requests = await prisma.Post.deleteMany({
     where: {

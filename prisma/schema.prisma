@@ -104,8 +104,20 @@ model Post  {
   Image         String?
   image_Public_ID         String?
 
+  // Optional for WebAuthn support
+  Post_Media Post_Media[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+} 
+
+model Post_Media  {
+  id            String          @id @default(cuid())
+  Postid        String          
+  Image         String?
+  image_Public_ID         String?
+
+ post Post @relation(fields: [Postid], references: [id], onDelete: Cascade)
 } 
 
 model CLB_Membership  {

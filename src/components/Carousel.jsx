@@ -27,7 +27,7 @@ const Carousel = ({ slides, autoSlide = false, interval = 3000 }) => {
   return (
     <div
       dir="ltr"
-      className="p-2  border-2 bg-white border-gray-300 rounded-lg shadow-lg"
+      className="lg:w-[50%] md:[70%] p-2 border-2 bg-white border-gray-300 rounded-lg shadow-lg"
     >
       <div className="relative min-w-[100%] max-w-[100%] min-h-[100%] max-h-[100%] overflow-hidden rounded-lg shadow-md">
         <div

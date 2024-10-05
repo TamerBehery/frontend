@@ -27,7 +27,17 @@ const CreatePost = () => {
     Article: "",
     Image: "",
     image_Public_ID: "",
+    Post_Media: [
+      /*{
+        Image: "",
+        image_Public_ID: "",
+      },*/
+    ],
   });
+
+  const [imageList, setImageList] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [uploading, setUploading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(false);
@@ -57,15 +67,39 @@ const CreatePost = () => {
     //post.Image = imageData?.image;
 
     //Upload Image To Cloudinary //cloudname: drp7utbgz - upload_preset:microsolution
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-    formData.append("upload_preset", "microsolution");
-    await axios.post("https://api.cloudinary.com/v1_1/drp7utbgz/upload", formData)
-    .then((result)=>{
-      post.Image = result.data.secure_url;
-      post.image_Public_ID = result.data.public_id;
-    })
+    // let formData = new FormData();
+    // formData.append("file", selectedFiles[0]);
+    // formData.append("upload_preset", "microsolution");
+    // await axios
+    //   .post("https://api.cloudinary.com/v1_1/drp7utbgz/upload", formData)
+    //   .then((result) => {
+    //     post.Image = result.data.secure_url;
+    //     post.image_Public_ID = result.data.public_id;
+    //   });
 
+    setDisabled(true);
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      let formData = new FormData();
+      formData.append("file", selectedFiles[i]);
+      formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUD_UPLOAD_PRESET);
+      
+      await axios
+        .post(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/upload`, formData)
+        .then((result) => {
+          if (i === 0) {
+            post.Image = result.data.secure_url;
+            post.image_Public_ID = result.data.public_id;
+          } else {
+            post.Post_Media.push({
+              Image: result.data.secure_url,
+              image_Public_ID: result.data.public_id,
+            });
+          }
+        });
+    }
+
+    //console.log(post);
     try {
       const response = await fetch("/api/post", {
         method: "POST",
@@ -77,8 +111,9 @@ const CreatePost = () => {
 
       if (response.ok) {
         setDisabled(true);
-        const userInfo = await response.json();
-        //router.replace("/mempershipRenew");
+        const postData = await response.json();
+        //console.log(postData);
+        router.replace("/posts");
         setError("");
       } else {
         const errorData = await response.json();
@@ -191,6 +226,7 @@ const CreatePost = () => {
                   <label>
                     <input
                       type="file"
+                      multiple={true}
                       hidden
                       onChange={({ target }) => {
                         if (target.files) {
@@ -198,24 +234,48 @@ const CreatePost = () => {
                           setSelectedImage(URL.createObjectURL(file));
                           setSelectedFile(file);
                           setUploading(false);
+
+                          const files = target.files;
+                          //setImageList(target.files);
+                          let filesArr = [];
+                          let imagesArr = [];
+                          for (let i = 0; i < target.files.length; i++) {
+                            imagesArr.push(URL.createObjectURL(files[i]));
+                            filesArr.push(files[i]);
+                          }
+                          setSelectedImages(imagesArr);
+                          setSelectedFiles(filesArr);
                         } else {
                           setUploading(true);
                         }
                       }}
                     ></input>
-                    <div className="w-full h-48 aspect-video rounded flex items-center justify-center border-2 border-dashed border-gray-400 cursor-pointer overflow-hidden">
-                      {selectedImage ? (
+                    <div className="w-full h-12 aspect-video rounded flex items-center justify-center border-2 border-dashed border-gray-400 cursor-pointer overflow-hidden">
+                      {/* {selectedImage ? (
                         <img
                           src={selectedImage}
                           alt=""
                           className="object-cover"
                         />
-                      ) : (
-                        <span>Select Image</span>
-                      )}
+                      ) : ( */}
+                      <span>Select Image</span>
+                      {/* )} */}
                     </div>
                   </label>
                 </div>
+              </div>
+
+              <div className="flex flex-row flex-wrap border-2 border-gray-300">
+                {selectedImages.map((i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={i}
+                      alt=""
+                      className="object-cover w-[50%] h-36 md:h-48  p-1"
+                    />
+                  );
+                })}
               </div>
 
               {error && (
@@ -231,6 +291,7 @@ const CreatePost = () => {
                 <button
                   type="submit"
                   disabled={disabled}
+                  style={{ opacity: disabled ? ".5" : "1" }}
                   //enabled={enabled}
                   className="flex justify-center w-20 rounded-md bg-green-600 px-3 py-0.5 text-sm rtl:text-lg font-semibold rtl:font-normal leading-6 text-white shadow-sm hover:bg-green-500 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 >
@@ -239,6 +300,7 @@ const CreatePost = () => {
 
                 <Link
                   href="/posts"
+                  disabled={disabled}
                   className="flex justify-center w-20 rounded-md bg-blue-700 px-3 py-0.5 text-sm rtl:text-lg font-semibold rtl:font-normal leading-6 text-white shadow-sm hover:bg-blue-600 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 >
                   تراجع

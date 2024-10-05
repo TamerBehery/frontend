@@ -49,16 +49,22 @@ const Navbar = () => {
         </div>
 
         <div dir="rtl" className="flex-grow">
-          <ul className="hidden sm:flex justify-center">
+          <ul className="hidden md:flex justify-center">
             <Link href="/" onClick={() => setActiveElement("Home")}>
-              <li className="mx-5 font-sans font-bold hover:font-bold text-xl text-green-800">
+              <li className="mx-3 lg:mx-5 font-sans font-semibold hover:font-bold text-sm lg:text-xl text-green-800">
                 الرئيسية
               </li>
             </Link>
 
-            {status === "authenticated" && (
+            <Link href="/newMempership" onClick={() => setActiveElement("/")}>
+              <li className="mx-3 lg:mx-5 font-sans font-semibold hover:font-bold text-sm lg:text-xl text-green-800">
+                طلب عضوية جديدة
+              </li>
+            </Link>
+
+            {status === "authenticated" && data?.user?.Role != "Editor" && (
               <Link href="/" onClick={() => setActiveElement("Service")}>
-                <li className="mx-5 font-sans font-semibold hover:font-bold text-xl text-green-800">
+                <li className="mx-3 lg:mx-5 font-sans font-semibold hover:font-bold text-sm lg:text-xl text-green-800">
                   خدمات الاعضاء
                 </li>
               </Link>
@@ -68,17 +74,27 @@ const Navbar = () => {
               href="/contactUs"
               onClick={() => setActiveElement("contactUs")}
             >
-              <li className="mx-5 font-sans font-semibold hover:font-bold text-xl text-green-800">
+              <li className="mx-3 lg:mx-5 font-sans font-semibold hover:font-bold text-sm lg:text-xl text-green-800">
                 تواصل معنا
               </li>
             </Link>
+
+            {status === "authenticated" &&
+              (data?.user?.Role === "Admin" ||
+                data?.user?.Role === "Editor") && (
+                <Link href="/posts" onClick={() => setActiveElement("Service")}>
+                  <li className="mx-3 lg:mx-5 font-sans font-semibold hover:font-bold text-sm lg:text-xl text-green-800">
+                    إدارة التقارير الإخبارية
+                  </li>
+                </Link>
+              )}
           </ul>
         </div>
 
         <div className="flex">
           <DropdownAvatar />
 
-          <div onClick={handeNav} className="sm:hidden cursor-pointer">
+          <div onClick={handeNav} className="md:hidden cursor-pointer">
             <AiOutlineMenu size={42} className="text-green-800" />
           </div>
         </div>
@@ -87,7 +103,7 @@ const Navbar = () => {
       <div
         className={
           menuOpen
-            ? "fixed top-0 left-0 w-[80%] h-screen sm:hidden bg-[#ecf0f3] bg-opacity-90  p-5 ease-in duration-500"
+            ? "fixed top-0 left-0 w-[80%] h-screen md:hidden bg-[#ecf0f3] bg-opacity-90  p-5 ease-in duration-500"
             : "fixed top-0 left-[-100%] h-screen p-5 ease-in duration-500"
         }
       >
@@ -121,7 +137,7 @@ const Navbar = () => {
               </li>
             </Link>
 
-            {status === "authenticated" && (
+            {status === "authenticated" && data?.user?.Role != "Editor" && (
               <Link href="/mempershipRenew">
                 <li
                   onClick={() => {
@@ -134,7 +150,7 @@ const Navbar = () => {
               </Link>
             )}
 
-            {status === "authenticated" && (
+            {status === "authenticated" && data?.user?.Role != "Editor" && (
               <Link href="/closetRentRequest">
                 <li
                   onClick={() => {
@@ -147,7 +163,7 @@ const Navbar = () => {
               </Link>
             )}
 
-            {status === "authenticated" && (
+            {status === "authenticated" && data?.user?.Role != "Editor" && (
               <Link href="/stadiumRentRequest">
                 <li
                   onClick={() => {
@@ -171,19 +187,18 @@ const Navbar = () => {
               </li>
             </Link>
 
-            {status === "authenticated" && data?.user?.Role ==="Admin" && (
-              <Link href="/posts">
-                <li
-                  onClick={() => {
-                    setMenuOpen(false);
-                  }}
-                  className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
-                >
-                  إدارة التقارير الإخبارية
-                </li>
-              </Link>
-            )}
-
+            {status === "authenticated" && (data?.user?.Role === "Admin" || data?.user?.Role === "Editor") && (
+                <Link href="/posts">
+                  <li
+                    onClick={() => {
+                      setMenuOpen(false);
+                    }}
+                    className="py-2 font-sans font-semibold hover:font-bold text-xl text-green-900 border-b-2 border-b-green-900 cursor-pointer"
+                  >
+                    إدارة التقارير الإخبارية
+                  </li>
+                </Link>
+              )}
           </ul>
 
           <div
