@@ -126,7 +126,7 @@ const CreatePost = () => {
 
   return (
     <div className="">
-      {status === "authenticated" && data?.user?.Role == "Admin" && (
+      {status === "authenticated" && (data?.user?.Role == "Admin" || data?.user?.Role == "Editor") && (
         <div>
           <Breadcrumb Tittle={"اضافة مقال جديد"} />
 
