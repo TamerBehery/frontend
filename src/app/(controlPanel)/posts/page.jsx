@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <div className=" ">
       {/*{posts[0]?.attributes?.Image?.data[0]?.attributes?.url ? (  */}
-      {status === "authenticated" && data?.user?.Role == "Admin" && (
+      {status === "authenticated" && (data?.user?.Role == "Admin" || data?.user?.Role == "Editor") && (
         <div>
           {posts[0]?.Image ? (
             <div>
