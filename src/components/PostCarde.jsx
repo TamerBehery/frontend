@@ -12,7 +12,7 @@ const PostCarde = ({ post }) => {
             className="max-w-40 min-w-40 min-h-28 max-h-28 shrink-0"
           ></img>
         </div>
-        <div className="">
+        <div className="p-1">
           <h2 className="font-sans font-semibold text-xl text-green-900 line-clamp-2">
             {/*post?.attributes?.Tittle*/}
             {post?.Tittle}

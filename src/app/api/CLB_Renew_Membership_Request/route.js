@@ -41,14 +41,14 @@ export async function POST(request) {
 
   //console.log(body);
 
-  if (!Year || !Membership_ID || !Membership_No) {
-    return NextResponse.json(
-      {
-        message: "Missing data is required",
-      },
-      { status: 400 }
-    );
-  }
+  // if (!Year || !Membership_ID || !Membership_No) {
+  //   return NextResponse.json(
+  //     {
+  //       message: `Missing data is required ${Year} ${Membership_ID} ${Membership_No}`,
+  //     },
+  //     { status: 400 }
+  //   );
+  // }
 
   const exist = await prisma.CLB_Renew_Membership_Request.findMany({
     where: {

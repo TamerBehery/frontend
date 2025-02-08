@@ -18,6 +18,8 @@ const CreateMembershipRenew = () => {
 
   const [year, setYear] = useState("");
 
+  const [years, setYears] = useState([]);
+
   const emptyData = {
     Request_ID: 0,
     Membership_ID: 0,
@@ -34,10 +36,33 @@ const CreateMembershipRenew = () => {
   const [data, setData] = useState(emptyData);
 
   useEffect(() => {
-    setEnabled(false)
+    getRenewValue_Years();
+  }, []);
+
+  useEffect(() => {
+    setEnabled(false);
     getRenewValue();
-    setEnabled(true)
+    setEnabled(true);
   }, [year]);
+
+  const getRenewValue_Years = async () => {
+    const response = await fetch(`/api/CLB_Membership_Renew_Value`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const resData = await response?.json();
+
+    if (resData?.data.length > 0) {
+      //setData(resData?.data[0]);
+      const X = resData?.data;
+      console.log(X);
+      setYears(X);
+    } else {
+      setYears([]);
+    }
+  };
 
   const getRenewValue = async () => {
     if (year !== "") {
@@ -127,11 +152,16 @@ const CreateMembershipRenew = () => {
                 className="w-36 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 outline-0 sm:text-sm sm:leading-6"
               >
                 <option value="">اختيار السنة</option>
+                {/*
                 <option value={2020}>2020</option>
                 <option value={2021}>2021</option>
                 <option value={2022}>2022</option>
                 <option value={2023}>2023</option>
                 <option value={2024}>2024</option>
+                */}
+                {years?.map((year) => {
+                  return (<option key={year.ID} value={year.Year}>{year.Year}</option>);
+                })}
               </select>
             </div>
           </div>
@@ -295,7 +325,7 @@ const CreateMembershipRenew = () => {
           <div className="flex gap-x-2">
             <button
               type="submit"
-              disabled = {!enabled}
+              disabled={!enabled}
               className="flex justify-center w-20 rounded-md bg-green-600 px-3 py-0.5 text-sm rtl:text-lg font-semibold rtl:font-normal leading-6 text-white shadow-sm hover:bg-green-500 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               حفظ
