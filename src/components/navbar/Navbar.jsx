@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import DropdownAvatar from "@/components/navbar/DropdownAvatar";
 
@@ -31,6 +31,24 @@ const Navbar = () => {
   const handeNav = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const sidebarRef = useRef();
+  const MenuRef = useRef();
+
+  useEffect(() => {
+    const handler = (event) => {
+      if ((MenuRef.current && !MenuRef.current.contains(event.target)) && (sidebarRef.current && !sidebarRef.current.contains(event.target))) {
+        setMenuOpen(false);
+        console.log(sidebarRef.current);
+      }
+    };
+
+    document.addEventListener("click", handler);
+
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, []);
 
   return (
     <nav className="sticky top-0 w-full h-[88px] sm:h-24 lia shadow shadow-green-900 bg-gradient-to-b from-slate-100   via-white via-50% to-slate-100 to-100%">
@@ -94,9 +112,14 @@ const Navbar = () => {
         <div className="flex">
           <DropdownAvatar />
 
-          <div onClick={handeNav} className="md:hidden cursor-pointer">
+          <button
+            ref={MenuRef}
+            onClick={handeNav}
+            //onBlur={handeNav}
+            className="md:hidden cursor-pointer"
+          >
             <AiOutlineMenu size={42} className="text-green-800" />
-          </div>
+          </button>
         </div>
       </div>
 
@@ -106,6 +129,7 @@ const Navbar = () => {
             ? "fixed top-0 left-0 w-[80%] h-screen md:hidden bg-[#ecf0f3] bg-opacity-90  p-5 ease-in duration-500"
             : "fixed top-0 left-[-100%] h-screen p-5 ease-in duration-500"
         }
+        ref={sidebarRef}
       >
         <div className="flex justify-end pb-6 border-b-2 border-b-green-900">
           <div onClick={handeNav} className="cursor-pointer">
@@ -187,7 +211,9 @@ const Navbar = () => {
               </li>
             </Link>
 
-            {status === "authenticated" && (data?.user?.Role === "Admin" || data?.user?.Role === "Editor") && (
+            {status === "authenticated" &&
+              (data?.user?.Role === "Admin" ||
+                data?.user?.Role === "Editor") && (
                 <Link href="/posts">
                   <li
                     onClick={() => {
