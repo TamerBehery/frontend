@@ -39,7 +39,11 @@ const Navbar = () => {
     const handler = (event) => {
       if ((MenuRef.current && !MenuRef.current.contains(event.target)) && (sidebarRef.current && !sidebarRef.current.contains(event.target))) {
         setMenuOpen(false);
+<<<<<<< HEAD
         //console.log(sidebarRef.current);
+=======
+        console.log(sidebarRef.current);
+>>>>>>> a52a5fbf672231bd710b4594f7c1ded7adfb4b3a
       }
     };
 
