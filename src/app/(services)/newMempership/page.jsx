@@ -55,7 +55,7 @@ const CreateNewMembership = () => {
         const userInfo = await response.json();
         //router.replace("/mempershipRenew");
         setError("");
-    } else {
+      } else {
         const errorData = await response.json();
         setError(errorData.message);
       }

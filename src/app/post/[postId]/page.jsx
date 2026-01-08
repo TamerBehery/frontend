@@ -5,17 +5,26 @@ import postApis from "@/_utils/PostApis";
 import Image from "next/image";
 import SkeletonPostDetails from "@/components/SkeletonPostDetails";
 
+import useFetch from "@/hooks/useFetch";
+
 const Post = ({ params }) => {
   const [post, setPost] = useState([]);
 
-  useEffect(() => {
-    getPost();
-  }, [params?.postId]);
+  const { data } = useFetch(`/post/${params?.postId}`);
 
+  useEffect(() => {
+    if (data?.data) {
+      data && setPost(data?.data?.data[0]);
+    }
+    //console.log(data?.data?.data[0]);
+  }, [params?.postId, data]);
+
+  /*
   const getPost = async () => {
-    //postApis.getPostById(params?.postId).then((res) => {
-    //  setPost(res?.data.data);
-    //});
+    
+    postApis.getPostById(params?.postId).then((res) => {
+     setPost(res?.data.data);
+    });
 
     const response = await fetch(`/api/post/${params?.postId}`, {
       method: "GET",
@@ -24,12 +33,14 @@ const Post = ({ params }) => {
       },
     });
     const data = await response?.json();
-
+   
     if (data?.data) {
       setPost(data?.data[0]);
     }
+
     //console.log(data?.data[0]);
   };
+*/
 
   return (
     <div>
@@ -62,7 +73,7 @@ const Post = ({ params }) => {
 
           {post?.Post_Media.map((i) => {
             return (
-              <div className="mb-2">
+              <div key={i?.id} className="mb-2">
                 <Image
                   src={i?.Image}
                   alt="Image"

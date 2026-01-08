@@ -1,12 +1,14 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const DropdownAvatar = () => {
   const { data, status } = useSession();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const dropdownRef = useRef();
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -16,8 +18,23 @@ const DropdownAvatar = () => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    const handler = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+        //console.log(dropdownRef.current);
+      }
+    };
+
+    document.addEventListener("click", handler);
+
+    return () => {
+      document.removeEventListener("click", handler);
+    };
+  }, []);
+
   return (
-    <div className="flex w-[110px] justify-end ml-3 sm:ml-0">
+    <div className="flex w-[110px] justify-end ml-3 sm:ml-0" ref={dropdownRef}>
       {/* {status === "loading" && <p>loading</p>} */}
 
       {status === "unauthenticated" && (
@@ -41,13 +58,16 @@ const DropdownAvatar = () => {
 
       {status === "authenticated" && (
         <div className="relative ml-0">
-          <img
-            className="inline-block h-10 sm:h-10 w-10 sm:w-10 rounded-full ring-1 ring-gray-300"
-            src={data?.user?.image}
-            //src="/static/avatar.png"
-            alt=""
-            onClick={toggleDropdown}
-          />
+          <button
+            onClick={toggleDropdown} //</div>onBlur={toggleDropdown}
+          >
+            <img
+              className="inline-block h-10 sm:h-10 w-10 sm:w-10 rounded-full ring-1 ring-gray-300"
+              src={data?.user?.image}
+              //src="/static/avatar.png"
+              alt=""
+            />
+          </button>
 
           {isOpen && (
             <div className="absolute left-0 mt-2 w-56 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5 ">

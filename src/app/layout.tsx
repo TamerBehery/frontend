@@ -28,7 +28,7 @@ export default function RootLayout({
       <NextAuthProvider>
         <body className={inter.className}>
           <div className="h-[100%] min-h-screen bg-slate-200">
-            <div className="sticky top-0 z-10">
+            <div className="sticky top-0 z-20">
               <Navbar />
             </div>
 

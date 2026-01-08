@@ -4,8 +4,8 @@ import Carousel from "@/components/Carousel";
 import PostList from "@/components/PostList";
 import SkeletonCarousel from "@/components/SkeletonCarousel";
 
-import PostApis from "@/_utils/PostApis";
 import { useEffect, useState } from "react";
+import useFetch from "@/hooks/useFetch";
 
 export default function Home() {
   /*
@@ -43,30 +43,41 @@ export default function Home() {
 
   const [posts, setPosts] = useState([]);
 
+  // useEffect(() => {
+  //   getPosts();
+  // }, []);
+
+  // const getPosts = async () => {
+  //   /*
+  //   PostApis.getPosts().then((res) => {
+  //     setPosts(res.data.data);
+  //   });
+  //   */
+
+  //   const response = await fetchApi.get("/post");
+
+  //   /*
+  //   const response = await fetch("/api/post", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await response?.json();
+  //   */
+
+  //   if (response?.data?.data) {
+  //     setPosts(response?.data?.data);
+  //   }
+  // };
+
+
+  const { data, loading, error } = useFetch("/post");
+  //console.log(data)
   useEffect(() => {
-    getPosts();
-  }, []);
-
-  const getPosts = async () => {
-    /*
-    PostApis.getPosts().then((res) => {
-      setPosts(res.data.data);
-    });
-    */
-
-    const response = await fetch("/api/post", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response?.json();
-
-    if (data?.data) {
-      setPosts(data?.data);
-    }
-  };
-
+    data && setPosts(data?.data?.data);
+    //console.log(data);
+  }, [data]);
   //console.log(posts);
 
   return (
